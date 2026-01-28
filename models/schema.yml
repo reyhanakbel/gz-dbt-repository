@@ -1,0 +1,49 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: gz_raw_data
+    tables:
+      - name: sales
+        identifier: raw_gz_sales
+        description: sales from GZ, primary key is product_id and order_id combined
+        columns:
+          - name: date_date
+            description: date of purchase
+          - name: orders_id
+            description: foreign key for ship
+          - name: pdt_id
+            description: foreign key for product
+          - name: revenue
+            description: revenue from purchase
+          - name: quantity
+            description: quantity of purchase
+        tests:
+          - unique:
+              column_name: "(orders_id || '-' || pdt_id)"
+      - name: product
+        identifier: raw_gz_product
+        description: prices of product
+        columns:
+          - name: products_id
+            description: primary key
+            tests:
+              - unique
+              - not_null
+          - name: purchase_price
+            description: prices of products
+      - name: ship
+        identifier: raw_gz_ship
+        description: shipping fees and cost of orders
+        columns:
+          - name: orders_id
+            description: primary key
+            tests:
+              - unique
+              - not_null
+          - name: shipping_fee
+            description: costs that customers pay for shipping
+          - name: log_cost
+            description: packaging cost
+          - name: ship_cost
+            description: cost of logistics
