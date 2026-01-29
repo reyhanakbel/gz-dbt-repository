@@ -1,3 +1,4 @@
+{{config(materialized="view")}}
 SELECT
 date_date,
 COUNT(DISTINCT orders_id) AS nb_of_purchase,
